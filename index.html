@@ -6,733 +6,154 @@
   <title>Vitória Camille | Especialista em Cibersegurança</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
-    /* Variáveis de tema */
     :root {
       --primary: #1a1a1a;
-      --secondary: #333333;
       --accent: #2563EB;
       --accent-dark: #1E40AF;
-      --text: #2D3748;
-      --text-light: #4A5568;
-      --background: #FFFFFF;
-      --border: #E2E8F0;
-      --card-bg: #FFFFFF;
+      --text: #333;
+      --background: #f8f9fa;
       --terminal-bg: #1e1e1e;
       --terminal-text: #4af626;
-      --hacker-green: #10B981;
-    }
-
-    /* Tema Verde Tech */
-    .theme-green {
-      --accent: #10B981;
-      --accent-dark: #047857;
-      --hacker-green: #2563EB;
-    }
-
-    /* Reset e Estilos Globais */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
     }
 
     body {
-      font-family: 'Courier New', monospace, sans-serif;
-      background-color: var(--background);
+      font-family: 'Courier New', monospace;
+      margin: 0;
+      background: var(--background);
       color: var(--text);
-      line-height: 1.6;
       overflow-x: hidden;
-      transition: background-color 0.3s, color 0.3s;
     }
 
-    /* Terminal de Inicialização */
-    #terminal-start {
+    /* Terminal */
+    #terminal {
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
       height: 100vh;
-      background-color: var(--terminal-bg);
+      background: var(--terminal-bg);
       color: var(--terminal-text);
       padding: 2rem;
-      z-index: 9999;
-      display: flex;
-      flex-direction: column;
+      z-index: 1000;
       font-family: 'Courier New', monospace;
     }
 
-    .terminal-header {
-      display: flex;
-      justify-content: space-between;
-      margin-bottom: 1rem;
-      padding-bottom: 0.5rem;
-      border-bottom: 1px solid #333;
-    }
-
-    .terminal-content {
-      flex-grow: 1;
+    #terminal-output {
+      height: calc(100vh - 120px);
       overflow-y: auto;
       margin-bottom: 1rem;
     }
 
-    .terminal-input {
-      display: flex;
-      align-items: center;
-    }
-
-    .prompt {
-      color: var(--terminal-text);
-      margin-right: 0.5rem;
-    }
-
-    #terminal-command {
+    #terminal-input {
       background: transparent;
       border: none;
       color: var(--terminal-text);
-      font-family: 'Courier New', monospace;
-      font-size: 1rem;
       width: 100%;
       outline: none;
-    }
-
-    #terminal-cursor {
-      animation: blink 1s infinite;
-    }
-
-    @keyframes blink {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0; }
+      font-family: 'Courier New', monospace;
     }
 
     /* Conteúdo Principal */
     #main-content {
       display: none;
       opacity: 0;
-      transition: opacity 0.5s;
+      transition: opacity 1s;
     }
 
     header {
+      padding: 1rem;
+      background: rgba(255,255,255,0.9);
       position: fixed;
+      width: 100%;
       top: 0;
-      width: 100%;
-      background-color: rgba(255, 255, 255, 0.95);
-      backdrop-filter: blur(10px);
-      padding: 1rem 2rem;
       z-index: 100;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     }
 
-    .logo {
-      font-weight: 700;
-      font-size: 1.5rem;
-      color: var(--primary);
-      text-decoration: none;
-      font-family: 'Courier New', monospace;
-    }
-
-    .nav-links {
-      display: flex;
-      gap: 2rem;
-    }
-
-    .nav-links a {
-      color: var(--text-light);
-      text-decoration: none;
-      font-weight: 500;
-      position: relative;
-      transition: color 0.3s;
-    }
-
-    .nav-links a:hover {
-      color: var(--accent);
-    }
-
-    .nav-links a::after {
-      content: '';
-      position: absolute;
-      bottom: -5px;
-      left: 0;
-      width: 0;
-      height: 2px;
-      background-color: var(--accent);
-      transition: width 0.3s;
-    }
-
-    .nav-links a:hover::after {
-      width: 100%;
-    }
-
-    .theme-toggle {
-      background: none;
-      border: none;
-      cursor: pointer;
-      color: var(--text-light);
-      font-size: 1.2rem;
-      transition: color 0.3s;
-    }
-
-    .theme-toggle:hover {
-      color: var(--accent);
-    }
-
-    /* Seção Hero */
     .hero {
-      padding: 10rem 2rem 6rem;
+      padding: 8rem 1rem 4rem;
       min-height: 100vh;
       display: flex;
       align-items: center;
     }
 
-    .hero-content {
-      max-width: 1200px;
-      margin: 0 auto;
-      display: flex;
-      align-items: center;
-      gap: 4rem;
-    }
-
-    .hero-text {
-      flex: 1;
-    }
-
-    .hero-img {
-      flex: 1;
-      text-align: center;
-      position: relative;
-      perspective: 1000px;
-    }
-
-    .profile-image-container {
-      width: 350px;
-      height: 450px;
-      position: relative;
-      transform-style: preserve-3d;
-      transition: transform 0.5s;
-      margin: 0 auto;
-    }
-
-    .profile-image {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
+    .hero-img img {
+      width: 280px;
       border-radius: 8px;
-      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-      border: 8px solid var(--background);
-      position: relative;
-      z-index: 2;
-      background-color: #f0f0f0;
+      border: 4px solid var(--accent);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
     }
 
-    .profile-image-shadow {
-      position: absolute;
-      width: 90%;
-      height: 90%;
-      background: var(--accent);
-      opacity: 0.2;
-      bottom: -15px;
-      right: -15px;
-      border-radius: 8px;
-      z-index: 1;
-      filter: blur(10px);
-    }
-
-    .profile-image-container:hover {
-      transform: translateY(-5px) rotateX(5deg);
-    }
-
-    h1 {
-      font-size: 3rem;
-      font-weight: 700;
-      color: var(--primary);
-      margin-bottom: 1.5rem;
-      line-height: 1.2;
-    }
-
-    .subtitle {
-      font-size: 1.5rem;
-      color: var(--text-light);
-      margin-bottom: 2rem;
-      font-weight: 400;
-    }
-
-    .btn {
-      display: inline-block;
-      background-color: var(--accent);
-      color: white;
-      padding: 0.8rem 1.5rem;
-      text-decoration: none;
-      border-radius: 4px;
-      font-weight: 500;
-      transition: all 0.3s;
-    }
-
-    .btn:hover {
-      background-color: var(--accent-dark);
-      transform: translateY(-3px);
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-    }
-
-    /* Seções */
-    section {
-      padding: 6rem 2rem;
-      border-top: 1px solid var(--border);
-    }
-
-    h2 {
-      font-size: 2rem;
-      font-weight: 600;
-      color: var(--primary);
-      margin-bottom: 2rem;
-      position: relative;
-      display: inline-block;
-    }
-
-    h2::after {
-      content: '';
-      position: absolute;
-      bottom: -10px;
-      left: 0;
-      width: 100%;
-      height: 3px;
-      background-color: var(--accent);
-    }
-
-    /* Projetos */
-    .projects-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-      gap: 2rem;
-      margin-top: 2rem;
-    }
-
-    .project-card {
-      background-color: var(--card-bg);
-      border-radius: 8px;
-      overflow: hidden;
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-      transition: all 0.3s;
-      border: 1px solid var(--border);
-    }
-
-    .project-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-      border-color: var(--accent);
-    }
-
-    .project-content {
-      padding: 1.5rem;
-    }
-
-    .project-title {
-      font-size: 1.25rem;
-      font-weight: 600;
-      margin-bottom: 0.5rem;
-      color: var(--primary);
-    }
-
-    .project-description {
-      color: var(--text-light);
-      margin-bottom: 1rem;
-    }
-
-    .project-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-    }
-
-    .tag {
-      background-color: #EBF8FF;
-      color: var(--accent);
-      padding: 0.3rem 0.8rem;
-      border-radius: 20px;
-      font-size: 0.8rem;
-      font-weight: 500;
-    }
-
-    /* Mini Jogo de Hacking */
-    #hacking-game {
-      position: fixed;
-      bottom: 2rem;
-      right: 2rem;
-      width: 300px;
-      background-color: var(--terminal-bg);
-      border: 2px solid var(--hacker-green);
-      border-radius: 8px;
-      padding: 1rem;
-      color: var(--terminal-text);
-      z-index: 500;
-      display: none;
-      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
-    }
-
-    .game-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 1rem;
-      padding-bottom: 0.5rem;
-      border-bottom: 1px solid #333;
-    }
-
-    .game-title {
-      font-weight: 600;
-    }
-
-    .close-game {
-      cursor: pointer;
-      color: #ff5555;
-      font-weight: bold;
-    }
-
-    .game-progress {
-      height: 20px;
-      background-color: #333;
-      border-radius: 10px;
-      margin-bottom: 1rem;
-      overflow: hidden;
-    }
-
-    .progress-bar {
-      height: 100%;
-      width: 0%;
-      background-color: var(--hacker-green);
-      transition: width 0.3s;
-    }
-
-    .game-instructions {
-      margin-bottom: 1rem;
-      font-size: 0.9rem;
-    }
-
-    .game-buttons {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 0.5rem;
-    }
-
-    .game-btn {
-      background-color: #333;
-      color: var(--terminal-text);
-      border: none;
-      padding: 0.5rem;
-      border-radius: 4px;
-      cursor: pointer;
-      transition: all 0.2s;
-      font-family: 'Courier New', monospace;
-      font-weight: bold;
-    }
-
-    .game-btn:hover {
-      background-color: var(--hacker-green);
-      color: #000;
-    }
-
-    .hack-btn {
-      position: fixed;
-      bottom: 2rem;
-      right: 2rem;
-      width: 50px;
-      height: 50px;
-      background-color: var(--hacker-green);
-      color: white;
-      border: none;
-      border-radius: 50%;
-      font-size: 1.2rem;
-      cursor: pointer;
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-      z-index: 400;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: all 0.3s;
-    }
-
-    .hack-btn:hover {
-      transform: scale(1.1);
-      box-shadow: 0 0 20px var(--hacker-green);
-    }
-
-    /* Responsividade */
     @media (max-width: 768px) {
-      .hero-content {
+      .hero {
         flex-direction: column;
-      }
-
-      .profile-image-container {
-        width: 280px;
-        height: 360px;
-      }
-
-      .nav-links {
-        display: none;
-      }
-
-      #hacking-game {
-        width: calc(100% - 4rem);
-        bottom: 1rem;
-        right: 1rem;
-      }
-
-      .hack-btn {
-        bottom: 1rem;
-        right: 1rem;
-      }
-
-      h1 {
-        font-size: 2.2rem;
-      }
-
-      .subtitle {
-        font-size: 1.2rem;
+        text-align: center;
       }
     }
   </style>
 </head>
-<body class="theme-blue">
-  <!-- Conteúdo Principal -->
-  <div id="main-content">
-    <header>
-      <a href="#" class="logo">Vitória Camille</a>
-      <nav class="nav-links">
-        <a href="#sobre">Sobre</a>
-        <a href="#projetos">Projetos</a>
-        <a href="#certificacoes">Certificações</a>
-        <a href="#contato">Contato</a>
-      </nav>
-      <button class="theme-toggle" id="themeToggle">
-        <i class="fas fa-palette"></i>
-      </button>
-    </header>
-
-    <!-- Seção Hero -->
-    <section class="hero" id="hero">
-      <div class="hero-content">
-        <div class="hero-text">
-          <h1>Segurança Cibernética com Propósito</h1>
-          <p class="subtitle">Protegendo sistemas e dados com soluções inovadoras e éticas</p>
-          <a href="#sobre" class="btn">Explorar Portfólio</a>
-        </div>
-        <div class="hero-img">
-          <div class="profile-image-container">
-            <img src="foto.jpg" alt="Vitória Camille" class="profile-image">
-            <div class="profile-image-shadow"></div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Seção Sobre -->
-    <section id="sobre">
-      <h2>Sobre Mim</h2>
-      <p>Graduanda em Análise e Desenvolvimento de Sistemas com especialização em segurança cibernética. Combino conhecimento técnico com uma abordagem estratégica para proteger sistemas críticos.</p>
-      
-      <h3 style="margin-top: 2rem; color: var(--primary);">Áreas de Expertise</h3>
-      <ul>
-        <li>Análise de vulnerabilidades e testes de penetração</li>
-        <li>Implementação de frameworks de segurança (ISO 27001, NIST)</li>
-        <li>Monitoramento proativo de redes e análise forense</li>
-        <li>Treinamento e conscientização em segurança da informação</li>
-      </ul>
-    </section>
-
-    <!-- Seção Projetos -->
-    <section id="projetos">
-      <h2>Projetos Recentes</h2>
-      <div class="projects-grid">
-        <div class="project-card">
-          <div class="project-content">
-            <h3 class="project-title">Monitoramento de Rede Avançado</h3>
-            <p class="project-description">Sistema desenvolvido em Python utilizando Scapy para captura e análise de pacotes em tempo real, integrado com Grafana para visualização de dados.</p>
-            <div class="project-tags">
-              <span class="tag">Python</span>
-              <span class="tag">Scapy</span>
-              <span class="tag">Grafana</span>
-            </div>
-          </div>
-        </div>
-        
-        <div class="project-card">
-          <div class="project-content">
-            <h3 class="project-title">Write-up CTF</h3>
-            <p class="project-description">Documentação técnica detalhada de resolução de máquinas desafiadoras, abordando desde reconhecimento até exploração e escalação de privilégios.</p>
-            <div class="project-tags">
-              <span class="tag">Pentesting</span>
-              <span class="tag">CTF</span>
-              <span class="tag">Red Team</span>
-            </div>
-          </div>
-        </div>
-        
-        <div class="project-card">
-          <div class="project-content">
-            <h3 class="project-title">Análise de Logs Automatizada</h3>
-            <p class="project-description">Ferramenta em Bash para processamento automatizado de logs de servidores, com detecção de padrões suspeitos e geração de relatórios consolidados.</p>
-            <div class="project-tags">
-              <span class="tag">Bash</span>
-              <span class="tag">Linux</span>
-              <span class="tag">SIEM</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Seção Certificações -->
-    <section id="certificacoes">
-      <h2>Certificações</h2>
-      <ul>
-        <li><strong>ISO 27001: Fundamentos de Segurança da Informação</strong> - BSI (2023)</li>
-        <li><strong>LGPD e Proteção de Dados</strong> - EXIN (2023)</li>
-        <li><strong>Certified Ethical Hacker (CEH)</strong> - EC-Council (Em progresso)</li>
-        <li><strong>Análise e Desenvolvimento de Sistemas</strong> - Previsão de conclusão: 2025</li>
-      </ul>
-    </section>
-
-    <!-- Seção Contato -->
-    <section id="contato">
-      <h2>Contato</h2>
-      <p>Estou sempre aberta a discutir novos projetos, oportunidades de colaboração ou simplesmente conversar sobre segurança cibernética.</p>
-      
-      <div class="contact-info" style="margin-top: 2rem;">
-        <div class="contact-item" style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem;">
-          <i class="fas fa-envelope" style="color: var(--accent);"></i>
-          <a href="mailto:contato@exemplo.com" style="color: var(--text); text-decoration: none;">contato@exemplo.com</a>
-        </div>
-        <div class="contact-item" style="display: flex; align-items: center; gap: 0.5rem;">
-          <i class="fas fa-map-marker-alt" style="color: var(--accent);"></i>
-          <span>São Paulo, Brasil</span>
-        </div>
-      </div>
-      
-      <div class="social-icons" style="display: flex; gap: 1.5rem; margin-top: 2rem;">
-        <a href="https://linkedin.com" target="_blank" style="color: var(--text-light); font-size: 1.5rem;"><i class="fab fa-linkedin"></i></a>
-        <a href="https://github.com" target="_blank" style="color: var(--text-light); font-size: 1.5rem;"><i class="fab fa-github"></i></a>
-        <a href="https://twitter.com" target="_blank" style="color: var(--text-light); font-size: 1.5rem;"><i class="fab fa-twitter"></i></a>
-      </div>
-    </section>
-
-    <!-- Botão do Jogo de Hacking -->
-    <button class="hack-btn" id="hackBtn">🔒</button>
-
-    <!-- Mini Jogo de Hacking -->
-    <div id="hacking-game">
-      <div class="game-header">
-        <h3 class="game-title">Hack The System</h3>
-        <span class="close-game" id="closeGame">X</span>
-      </div>
-      <div class="game-progress">
-        <div class="progress-bar" id="progressBar"></div>
-      </div>
-      <p class="game-instructions">Decifre o código para ganhar acesso:</p>
-      <div class="game-buttons" id="gameButtons">
-        <!-- Botões serão gerados por JavaScript -->
-      </div>
+<body>
+  <!-- Terminal -->
+  <div id="terminal">
+    <div id="terminal-output">
+      <p>> Sistema de Portfólio - Vitória Camille</p>
+      <p>> Carregando módulos de segurança...</p>
+      <p>> Digite "start" para continuar</p>
+    </div>
+    <div style="display:flex;">
+      <span>></span>
+      <input type="text" id="terminal-input" autofocus>
     </div>
   </div>
 
-  <!-- Script do Terminal -->
-  <script>
-    // Terminal de Inicialização
-    document.addEventListener('DOMContentLoaded', () => {
-      const terminal = document.createElement('div');
-      terminal.id = 'terminal-start';
-      terminal.style.cssText = `
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100vh;
-        background: #1a1a1a;
-        color: #4af626;
-        font-family: 'Courier New', monospace;
-        padding: 2rem;
-        z-index: 9999;
-        display: flex;
-        flex-direction: column;
-      `;
-      
-      terminal.innerHTML = `
-        <div style="border-bottom: 1px solid #333; padding-bottom: 0.5rem; margin-bottom: 1rem;">
-          Terminal de Acesso - Portfólio Vitória Camille
-        </div>
-        <div id="terminal-output" style="flex-grow: 1; overflow-y: auto; margin-bottom: 1rem;">
-          <p>> Inicializando sistema de segurança...</p>
-          <p>> Verificando credenciais...</p>
-          <p>> Carregando módulos de proteção...</p>
-          <p>> Sistema pronto para autenticação.</p>
-          <p>> Digite "start" para acessar o portfólio</p>
-        </div>
-        <div style="display: flex; align-items: center;">
-          <span style="margin-right: 0.5rem;">></span>
-          <input type="text" id="terminal-input" style="
-            background: transparent;
-            border: none;
-            color: #4af626;
-            font-family: 'Courier New', monospace;
-            width: 100%;
-            outline: none;
-          " autofocus>
-          <span id="terminal-cursor" style="animation: blink 1s infinite;">_</span>
-        </div>
-      `;
-      
-      document.body.prepend(terminal);
-      
-      const terminalInput = document.getElementById('terminal-input');
-      const terminalOutput = document.getElementById('terminal-output');
-      
-      terminalInput.addEventListener('keypress', function(e) {
-        if (e.key === 'Enter') {
-          const command = this.value.trim().toLowerCase();
-          terminalOutput.innerHTML += `<p>> ${command}</p>`;
-          
-          if (command === 'start') {
-            terminalOutput.innerHTML += `<p>> Acesso concedido...</p>`;
-            setTimeout(() => {
-              terminal.style.opacity = '0';
-              setTimeout(() => {
-                terminal.remove();
-                document.getElementById('main-content').style.display = 'block';
-                setTimeout(() => {
-                  document.getElementById('main-content').style.opacity = '1';
-                }, 50);
-              }, 500);
-            }, 1000);
-          } else {
-            terminalOutput.innerHTML += `<p>> Comando não reconhecido</p>`;
-          }
-          
-          this.value = '';
-          terminalOutput.scrollTop = terminalOutput.scrollHeight;
-        }
-      });
-    });
+  <!-- Conteúdo Principal -->
+  <div id="main-content">
+    <header>
+      <h1>Vitória Camille</h1>
+    </header>
 
-    // Mini Jogo de Hacking
-    document.addEventListener('DOMContentLoaded', () => {
-      const hackBtn = document.getElementById('hackBtn');
-      const hackingGame = document.getElementById('hacking-game');
-      const closeGameBtn = document.getElementById('closeGame');
-      const gameButtons = document.getElementById('gameButtons');
-      const progressBar = document.getElementById('progressBar');
-      
-      const codeSequence = [3, 1, 4, 2];
-      let playerSequence = [];
-      let gameProgress = 0;
-      
-      // Cria botões do jogo
-      for (let i = 1; i <= 4; i++) {
-        const btn = document.createElement('button');
-        btn.className = 'game-btn';
-        btn.textContent = i;
-        btn.addEventListener('click', () => handleButtonClick(i));
-        gameButtons.appendChild(btn);
+    <section class="hero">
+      <div>
+        <h2>Especialista em Cibersegurança</h2>
+        <p>Protegendo sistemas com soluções inovadoras</p>
+      </div>
+      <div class="hero-img">
+        <img src="foto.jpg" alt="Vitória Camille">
+      </div>
+    </section>
+
+    <!-- Outras seções aqui -->
+  </div>
+
+  <script>
+    // Terminal Simples
+    const terminalInput = document.getElementById('terminal-input');
+    const terminalOutput = document.getElementById('terminal-output');
+    const terminal = document.getElementById('terminal');
+    const mainContent = document.getElementById('main-content');
+
+    terminalInput.addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') {
+        const command = this.value.trim().toLowerCase();
+        terminalOutput.innerHTML += `<p>> ${command}</p>`;
+        
+        if (command === 'start') {
+          terminalOutput.innerHTML += `<p>> Acesso concedido...</p>`;
+          setTimeout(() => {
+            terminal.style.opacity = '0';
+            setTimeout(() => {
+              terminal.style.display = 'none';
+              mainContent.style.display = 'block';
+              setTimeout(() => {
+                mainContent.style.opacity = '1';
+              }, 50);
+            }, 500);
+          }, 1000);
+        }
+        
+        this.value = '';
+        terminalOutput.scrollTop = terminalOutput.scrollHeight;
       }
-      
-      // Abre o jogo
-      hackBtn.ad
+    });
+  </script>
+</body>
+</html>
