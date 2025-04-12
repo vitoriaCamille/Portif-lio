@@ -6,369 +6,509 @@
   <title>Vitória Camille - Cibersegurança</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
-    /* Cores base */
+    /* Tema Azul (Padrão) */
     :root {
-      --tech-blue: #2563EB;
-      --tech-green: #10B981;
-      --dark: #1F2937;
-      --light: #F9FAFB;
-      --accent: var(--tech-blue);
-      --gradient: linear-gradient(135deg, var(--tech-blue), #1E40AF);
-      --card-bg: rgba(255, 255, 255, 0.1);
-      --card-border: rgba(255, 255, 255, 0.1);
+      --primary: #1A1A1A;
+      --secondary: #333333;
+      --accent: #2563EB;
+      --accent-dark: #1E40AF;
+      --text: #2D3748;
+      --text-light: #4A5568;
+      --background: #FFFFFF;
+      --border: #E2E8F0;
+      --tag-bg: #EBF8FF;
+      --tag-text: #2563EB;
     }
 
-    /* Tema Verde */
+    /* Tema Verde Tech */
     .theme-green {
-      --accent: var(--tech-green);
-      --gradient: linear-gradient(135deg, var(--tech-green), #047857);
+      --accent: #10B981;
+      --accent-dark: #047857;
+      --tag-bg: #F0FFF4;
+      --tag-text: #10B981;
     }
 
     body {
       font-family: 'Inter', sans-serif;
       margin: 0;
-      background: var(--dark);
-      color: var(--light);
+      background-color: var(--background);
+      color: var(--text);
       line-height: 1.6;
+      transition: all 0.3s ease;
     }
 
-    header {
-      background: var(--gradient);
-      padding: 3rem 2rem;
-      text-align: center;
-      clip-path: polygon(0 0, 100% 0, 100% 90%, 0 100%);
+    /* Painel de Controle de Temas */
+    .theme-panel {
+      position: fixed;
+      right: -200px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 200px;
+      background: white;
+      box-shadow: -5px 0 15px rgba(0,0,0,0.1);
+      padding: 20px;
+      z-index: 1000;
+      transition: right 0.3s ease;
+      border-radius: 8px 0 0 8px;
     }
 
-    h1 {
-      font-size: 2.5rem;
-      margin: 0;
-      color: white;
+    .theme-panel.active {
+      right: 0;
     }
 
-    /* Navegação por abas */
-    .tabs {
-      display: flex;
-      justify-content: center;
-      margin: 2rem auto;
-      max-width: 1200px;
-      border-bottom: 1px solid rgba(255,255,255,0.1);
-    }
-
-    .tab-btn {
-      padding: 0.8rem 1.5rem;
-      background: none;
-      border: none;
-      color: var(--light);
-      cursor: pointer;
-      font-size: 1rem;
-      position: relative;
-      opacity: 0.7;
-      transition: all 0.3s;
-    }
-
-    .tab-btn.active {
-      opacity: 1;
-      color: var(--accent);
-    }
-
-    .tab-btn.active::after {
-      content: '';
+    .theme-toggle {
       position: absolute;
-      bottom: -1px;
-      left: 0;
-      width: 100%;
-      height: 3px;
+      left: -40px;
+      top: 50%;
+      transform: translateY(-50%);
       background: var(--accent);
-    }
-
-    /* Conteúdo das abas */
-    .tab-content {
-      display: none;
-      padding: 0 2rem;
-      max-width: 1200px;
-      margin: 0 auto;
-      animation: fadeIn 0.5s;
-    }
-
-    .tab-content.active {
-      display: block;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-
-    /* Seção Hero */
-    .hero {
+      color: white;
+      width: 40px;
+      height: 40px;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 3rem;
-      padding: 2rem;
+      border-radius: 8px 0 0 8px;
+      cursor: pointer;
+      box-shadow: -5px 0 10px rgba(0,0,0,0.1);
+    }
+
+    .theme-options {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .theme-btn {
+      padding: 8px 12px;
+      border: 2px solid var(--border);
+      background: white;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: all 0.3s;
+      font-weight: 500;
+    }
+
+    .theme-btn.blue {
+      border-color: #2563EB;
+      color: #2563EB;
+    }
+
+    .theme-btn.green {
+      border-color: #10B981;
+      color: #10B981;
+    }
+
+    .theme-btn:hover {
+      transform: translateX(-5px);
+    }
+
+    header {
+      position: fixed;
+      width: 100%;
+      z-index: 100;
+      background: rgba(255, 255, 255, 0.97);
+      border-bottom: 1px solid var(--border);
+      padding: 1rem 0;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-weight: 700;
+      font-size: 1.5rem;
+      color: var(--primary);
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--text-light);
+      text-decoration: none;
+      font-weight: 500;
+      transition: all 0.2s ease;
+    }
+
+    .nav-links a:hover {
+      color: var(--accent);
+    }
+
+    .hero {
+      padding: 10rem 0 6rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .hero-content {
+      display: flex;
+      align-items: center;
+      gap: 4rem;
+    }
+
+    .hero-text {
+      flex: 1;
+    }
+
+    .hero-img {
+      flex: 1;
+      text-align: center;
     }
 
     .hero-img img {
       width: 280px;
-      border: 3px solid var(--accent);
-      border-radius: 5px;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+      height: auto;
+      object-fit: cover;
+      border: 4px solid var(--accent);
+      border-radius: 8px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
     }
 
-    /* Cards de Projetos */
-    .projects-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 1.5rem;
-      margin: 2rem 0;
+    h1 {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 1.5rem;
+      line-height: 1.2;
     }
 
-    .project-card {
-      background: var(--card-bg);
-      border-radius: 12px;
-      padding: 1.5rem;
-      transition: all 0.3s;
-      border: 1px solid var(--card-border);
+    .subtitle {
+      font-size: 1.25rem;
+      color: var(--text-light);
+      margin-bottom: 2rem;
+      font-weight: 400;
     }
 
-    .project-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 10px 20px rgba(0,0,0,0.2);
-      border-color: var(--accent);
+    .btn {
+      display: inline-block;
+      background: var(--accent);
+      color: white;
+      padding: 0.8rem 1.5rem;
+      text-decoration: none;
+      border-radius: 4px;
+      transition: all 0.2s ease;
+      font-weight: 500;
     }
 
-    /* Seletor de Temas */
-    .theme-selector {
-      position: fixed;
-      top: 20px;
-      right: 20px;
+    .btn:hover {
+      background: var(--accent-dark);
+      transform: translateY(-2px);
+    }
+
+    section {
+      padding: 4rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    section:last-child {
+      border-bottom: none;
+    }
+
+    h2 {
+      font-size: 1.75rem;
+      font-weight: 600;
+      color: var(--primary);
+      margin-bottom: 2rem;
+      position: relative;
+      display: inline-block;
+    }
+
+    h2::after {
+      content: '';
+      position: absolute;
+      width: 100%;
+      height: 2px;
+      bottom: -5px;
+      left: 0;
+      background: var(--accent);
+    }
+
+    .project {
+      margin-bottom: 3rem;
+    }
+
+    .project h3 {
+      font-size: 1.3rem;
+      margin-bottom: 0.5rem;
+      color: var(--primary);
+    }
+
+    .project-date {
+      color: var(--text-light);
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+    }
+
+    .project p {
+      margin-bottom: 1rem;
+      color: var(--text-light);
+    }
+
+    .project-tags {
       display: flex;
-      gap: 10px;
-      background: rgba(31, 41, 55, 0.8);
-      padding: 0.5rem;
-      border-radius: 30px;
-      backdrop-filter: blur(5px);
-      z-index: 100;
+      gap: 0.5rem;
+      flex-wrap: wrap;
     }
 
-    .theme-option {
-      width: 30px;
-      height: 30px;
-      border-radius: 50%;
-      cursor: pointer;
-      border: 2px solid transparent;
-      transition: all 0.3s;
+    .tag {
+      background: var(--tag-bg);
+      color: var(--tag-text);
+      padding: 0.3rem 0.8rem;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 500;
     }
 
-    .theme-option:hover {
-      transform: scale(1.1);
+    ul {
+      list-style-type: none;
+      padding: 0;
     }
 
-    .theme-option.active {
-      border-color: white;
+    ul li {
+      margin-bottom: 1rem;
+      position: relative;
+      padding-left: 1.5rem;
+      color: var(--text-light);
     }
 
-    .theme-blue-btn {
-      background: var(--tech-blue);
+    ul li::before {
+      content: '•';
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+      font-weight: bold;
     }
 
-    .theme-green-btn {
-      background: var(--tech-green);
+    .contact-info {
+      display: flex;
+      gap: 2rem;
+      margin-top: 2rem;
     }
 
-    /* Responsivo */
+    .contact-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .contact-item i {
+      color: var(--accent);
+    }
+
+    footer {
+      text-align: center;
+      padding: 2rem;
+      background: var(--primary);
+      color: white;
+      font-size: 0.9rem;
+    }
+
+    .social-icons {
+      display: flex;
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+
+    .social-icons a {
+      color: var(--text-light);
+      font-size: 1.5rem;
+      transition: all 0.2s ease;
+    }
+
+    .social-icons a:hover {
+      color: var(--accent);
+    }
+
     @media (max-width: 768px) {
-      .hero {
+      .hero-content {
         flex-direction: column;
-        text-align: center;
       }
       
-      .tabs {
-        overflow-x: auto;
-        justify-content: flex-start;
-        padding: 0 1rem;
+      .hero-img {
+        order: -1;
+        margin-bottom: 2rem;
       }
       
-      .theme-selector {
-        top: 10px;
-        right: 10px;
+      .hero-img img {
+        width: 200px;
+      }
+      
+      .nav-links {
+        display: none;
+      }
+      
+      .contact-info {
+        flex-direction: column;
+        gap: 1rem;
+      }
+      
+      .theme-panel {
+        width: 150px;
       }
     }
   </style>
 </head>
 <body class="theme-blue">
-  <!-- Seletor de Temas -->
-  <div class="theme-selector">
-    <div class="theme-option theme-blue-btn active" onclick="setTheme('blue')" title="Tema Azul"></div>
-    <div class="theme-option theme-green-btn" onclick="setTheme('green')" title="Tema Verde"></div>
+  <!-- Painel de Temas -->
+  <div class="theme-panel" id="themePanel">
+    <div class="theme-toggle" onclick="toggleThemePanel()">
+      <i class="fas fa-palette"></i>
+    </div>
+    <div class="theme-options">
+      <button class="theme-btn blue" onclick="setTheme('blue')">Tema Azul Tech</button>
+      <button class="theme-btn green" onclick="setTheme('green')">Tema Verde Tech</button>
+    </div>
   </div>
 
   <header>
-    <h1>Vitória Camille</h1>
-    <p id="subtitle">Especialista em Cibersegurança</p>
+    <div class="container">
+      <nav>
+        <a href="#" class="logo">Vitória Camille</a>
+        <ul class="nav-links">
+          <li><a href="#sobre">Sobre</a></li>
+          <li><a href="#projetos">Projetos</a></li>
+          <li><a href="#certificacoes">Certificações</a></li>
+          <li><a href="#contato">Contato</a></li>
+        </ul>
+      </nav>
+    </div>
   </header>
 
-  <!-- Navegação por Abas -->
-  <div class="tabs">
-    <button class="tab-btn active" onclick="openTab('sobre')">Sobre</button>
-    <button class="tab-btn" onclick="openTab('projetos')">Projetos</button>
-    <button class="tab-btn" onclick="openTab('certificacoes')">Certificações</button>
-    <button class="tab-btn" onclick="openTab('contato')">Contato</button>
-  </div>
-
-  <!-- Conteúdo das Abas -->
-  <main>
-    <!-- Aba Sobre -->
-    <div id="sobre" class="tab-content active">
-      <section class="hero">
-        <div>
-          <h2>Protegendo sistemas com soluções inovadoras</h2>
-          <p>Graduanda em Análise e Desenvolvimento de Sistemas com especialização em segurança cibernética. Combino conhecimento técnico com abordagem estratégica para proteger sistemas críticos.</p>
-          <div class="skills">
-            <h3>Habilidades:</h3>
-            <ul>
-              <li>Análise de vulnerabilidades e pentesting</li>
-              <li>Implementação de frameworks de segurança</li>
-              <li>Monitoramento proativo de redes</li>
-              <li>Análise forense digital</li>
-            </ul>
-          </div>
+  <main class="container">
+    <section class="hero">
+      <div class="hero-content">
+        <div class="hero-text">
+          <h1>Segurança Cibernética com Propósito</h1>
+          <p class="subtitle">Protegendo sistemas e dados com soluções inovadoras e éticas</p>
+          <a href="https://www.linkedin.com/in/vitória-ferreira-04754120a" target="_blank" class="btn">
+            <i class="fab fa-linkedin"></i> Conecte-se
+          </a>
         </div>
         <div class="hero-img">
-          <img src="foto.jpg" alt="Vitória Camille">
-        </div>
-      </section>
-    </div>
-
-    <!-- Aba Projetos -->
-    <div id="projetos" class="tab-content">
-      <div class="projects-grid">
-        <div class="project-card">
-          <h3>🛡️ Monitoramento de Rede</h3>
-          <p>Sistema em Python com Scapy para análise de pacotes em tempo real, integrado ao Grafana.</p>
-          <div class="tags">
-            <span>Python</span>
-            <span>Scapy</span>
-            <span>Grafana</span>
-          </div>
-          <a href="#" style="color: var(--accent);">Ver Projeto →</a>
-        </div>
-        
-        <div class="project-card">
-          <h3>🔓 Write-up CTF</h3>
-          <p>Documentação técnica de resolução de máquinas no Hack The Box e TryHackMe.</p>
-          <div class="tags">
-            <span>Pentesting</span>
-            <span>CTF</span>
-            <span>Red Team</span>
-          </div>
-          <a href="#" style="color: var(--accent);">Ver Write-ups →</a>
-        </div>
-        
-        <div class="project-card">
-          <h3>📊 Análise de Logs</h3>
-          <p>Ferramenta em Bash para processamento automatizado de logs de servidores.</p>
-          <div class="tags">
-            <span>Bash</span>
-            <span>Linux</span>
-            <span>SIEM</span>
-          </div>
-          <a href="#" style="color: var(--accent);">Ver Código →</a>
+          <img src="foto.jpg" alt="Vitória Camille"/>
         </div>
       </div>
-    </div>
+    </section>
 
-    <!-- Aba Certificações -->
-    <div id="certificacoes" class="tab-content">
-      <div class="certifications">
-        <div class="cert-card">
-          <h3>ISO 27001</h3>
-          <p>Fundamentos de Segurança da Informação</p>
-          <p><small>BSI • 2023</small></p>
-        </div>
-        
-        <div class="cert-card">
-          <h3>LGPD</h3>
-          <p>Proteção de Dados e Privacidade</p>
-          <p><small>EXIN • 2023</small></p>
-        </div>
-        
-        <div class="cert-card">
-          <h3>CEH</h3>
-          <p>Certified Ethical Hacker</p>
-          <p><small>EC-Council • Em progresso</small></p>
+    <section id="sobre">
+      <h2>Sobre Mim</h2>
+      <p>Graduanda em Análise e Desenvolvimento de Sistemas com especialização em segurança cibernética. Combino conhecimento técnico com uma abordagem estratégica para proteger sistemas críticos.</p>
+      
+      <h3 style="margin-top: 2rem; color: var(--primary);">Áreas de Expertise</h3>
+      <ul>
+        <li>Análise de vulnerabilidades e testes de penetração</li>
+        <li>Implementação de frameworks de segurança (ISO 27001, NIST)</li>
+        <li>Monitoramento proativo de redes e análise forense</li>
+        <li>Treinamento e conscientização em segurança da informação</li>
+      </ul>
+    </section>
+
+    <section id="projetos">
+      <h2>Projetos Recentes</h2>
+      
+      <div class="project">
+        <h3>Monitoramento de Rede Avançado</h3>
+        <div class="project-date">Janeiro 2024 - Presente</div>
+        <p>Sistema desenvolvido em Python utilizando Scapy para captura e análise de pacotes em tempo real, integrado com Grafana para visualização de dados de tráfego e detecção de anomalias.</p>
+        <div class="project-tags">
+          <span class="tag">Python</span>
+          <span class="tag">Scapy</span>
+          <span class="tag">Grafana</span>
+          <span class="tag">SIEM</span>
         </div>
       </div>
-    </div>
+      
+      <div class="project">
+        <h3>Write-up CTF (Hack The Box)</h3>
+        <div class="project-date">2023-2024</div>
+        <p>Documentação técnica detalhada de resolução de máquinas desafiadoras, abordando desde reconhecimento até exploração e escalação de privilégios, com foco em técnicas de mitigação.</p>
+        <div class="project-tags">
+          <span class="tag">Pentesting</span>
+          <span class="tag">CTF</span>
+          <span class="tag">Red Team</span>
+        </div>
+      </div>
+      
+      <div class="project">
+        <h3>Script de Automação para Análise de Logs</h3>
+        <div class="project-date">Agosto 2023</div>
+        <p>Ferramenta em Bash para processamento automatizado de logs de servidores, com detecção de padrões suspeitos e geração de relatórios consolidados para análise de segurança.</p>
+        <div class="project-tags">
+          <span class="tag">Bash</span>
+          <span class="tag">Linux</span>
+          <span class="tag">Log Analysis</span>
+        </div>
+      </div>
+    </section>
 
-    <!-- Aba Contato -->
-    <div id="contato" class="tab-content">
+    <section id="certificacoes">
+      <h2>Certificações e Educação</h2>
+      <ul>
+        <li><strong>ISO 27001: Fundamentos de Segurança da Informação</strong> - BSI (2023)</li>
+        <li><strong>LGPD e Proteção de Dados</strong> - EXIN (2023)</li>
+        <li><strong>Certified Ethical Hacker (CEH)</strong> - EC-Council (Em progresso)</li>
+        <li><strong>Análise e Desenvolvimento de Sistemas</strong> - Previsão de conclusão: 2025</li>
+      </ul>
+    </section>
+
+    <section id="contato">
+      <h2>Contato</h2>
+      <p>Estou sempre aberta a discutir novos projetos, oportunidades de colaboração ou simplesmente conversar sobre segurança cibernética.</p>
+      
       <div class="contact-info">
-        <div class="contact-card">
+        <div class="contact-item">
           <i class="fas fa-envelope"></i>
-          <h3>Email</h3>
-          <a href="mailto:contato@example.com">contato@example.com</a>
+          <a href="mailto:seuemail@exemplo.com" style="color: var(--text);">seuemail@exemplo.com</a>
         </div>
-        
-        <div class="contact-card">
+        <div class="contact-item">
           <i class="fas fa-map-marker-alt"></i>
-          <h3>Localização</h3>
-          <p>São Paulo, Brasil</p>
-        </div>
-        
-        <div class="contact-card">
-          <i class="fas fa-share-alt"></i>
-          <h3>Redes Sociais</h3>
-          <div class="social-links">
-            <a href="#"><i class="fab fa-linkedin"></i></a>
-            <a href="#"><i class="fab fa-github"></i></a>
-            <a href="#"><i class="fab fa-twitter"></i></a>
-          </div>
+          <span>São Paulo, Brasil</span>
         </div>
       </div>
-    </div>
+      
+      <div class="social-icons">
+        <a href="https://www.linkedin.com/in/vitória-ferreira-04754120a" target="_blank"><i class="fab fa-linkedin"></i></a>
+        <a href="https://github.com/seuuser" target="_blank"><i class="fab fa-github"></i></a>
+        <a href="https://twitter.com/seuuser" target="_blank"><i class="fab fa-twitter"></i></a>
+      </div>
+    </section>
   </main>
 
+  <footer>
+    <p>&copy; 2024 Vitória Camille Ramos Ferreira. Todos os direitos reservados.</p>
+  </footer>
+
   <script>
-    // Sistema de Abas
-    function openTab(tabId) {
-      const tabContents = document.querySelectorAll('.tab-content');
-      const tabBtns = document.querySelectorAll('.tab-btn');
-      
-      tabContents.forEach(content => {
-        content.classList.remove('active');
-      });
-      
-      tabBtns.forEach(btn => {
-        btn.classList.remove('active');
-      });
-      
-      document.getElementById(tabId).classList.add('active');
-      event.currentTarget.classList.add('active');
+    // Função para alternar o painel de temas
+    function toggleThemePanel() {
+      const panel = document.getElementById('themePanel');
+      panel.classList.toggle('active');
     }
 
-    // Sistema de Temas
+    // Função para mudar o tema
     function setTheme(theme) {
       document.body.className = 'theme-' + theme;
       
-      // Atualiza botões ativos
-      document.querySelector('.theme-blue-btn').classList.toggle('active', theme === 'blue');
-      document.querySelector('.theme-green-btn').classList.toggle('active', theme === 'green');
+      // Fecha o painel após selecionar um tema
+      document.getElementById('themePanel').classList.remove('active');
+      
+      // Atualiza o hover do botão de alternância
+      const toggleBtn = document.querySelector('.theme-toggle');
+      toggleBtn.style.backgroundColor = theme === 'blue' ? '#2563EB' : '#10B981';
     }
-
-    // Efeito de texto alternado
-    const subtitles = [
-      "Especialista em Cibersegurança",
-      "Analista de Pentest",
-      "Ethical Hacker",
-      "Consultora em Segurança"
-    ];
-    let current = 0;
-    
-    setInterval(() => {
-      document.getElementById("subtitle").textContent = subtitles[current];
-      current = (current + 1) % subtitles.length;
-    }, 3000);
   </script>
 </body>
 </html>
