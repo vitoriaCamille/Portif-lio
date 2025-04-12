@@ -456,6 +456,76 @@
     }
   </style>
 </head>
+  <!-- Adicione este código ANTES do </body> -->
+<script>
+  // Terminal de Inicialização - Versão Simplificada
+  document.addEventListener('DOMContentLoaded', function() {
+    const terminal = document.createElement('div');
+    terminal.id = 'terminal-start';
+    terminal.style.cssText = `
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100vh;
+      background: #1a1a1a;
+      color: #4af626;
+      font-family: 'Courier New', monospace;
+      padding: 2rem;
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+    `;
+    
+    terminal.innerHTML = `
+      <div style="border-bottom: 1px solid #333; padding-bottom: 0.5rem; margin-bottom: 1rem;">
+        Terminal de Acesso - Segurança Cibernética
+      </div>
+      <div id="terminal-output" style="flex-grow: 1; overflow-y: auto; margin-bottom: 1rem;">
+        <p>> Digite "start" para iniciar...</p>
+      </div>
+      <div style="display: flex; align-items: center;">
+        <span style="margin-right: 0.5rem;">></span>
+        <input type="text" id="terminal-input" style="
+          background: transparent;
+          border: none;
+          color: #4af626;
+          font-family: 'Courier New', monospace;
+          width: 100%;
+          outline: none;
+        " autofocus>
+      </div>
+    `;
+    
+    document.body.prepend(terminal);
+    
+    const terminalInput = document.getElementById('terminal-input');
+    const terminalOutput = document.getElementById('terminal-output');
+    
+    terminalInput.addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') {
+        const command = this.value.trim().toLowerCase();
+        terminalOutput.innerHTML += `<p>> ${command}</p>`;
+        
+        if (command === 'start') {
+          terminalOutput.innerHTML += `<p>> Acesso concedido...</p>`;
+          setTimeout(() => {
+            terminal.style.opacity = '0';
+            setTimeout(() => {
+              terminal.remove();
+              document.getElementById('main-content').style.display = 'block';
+            }, 500);
+          }, 1000);
+        } else {
+          terminalOutput.innerHTML += `<p>> Comando não reconhecido</p>`;
+        }
+        
+        this.value = '';
+        terminalOutput.scrollTop = terminalOutput.scrollHeight;
+      }
+    });
+  });
+</script>
 <body class="theme-blue">
   <!-- Terminal de Inicialização -->
   <div id="terminal-start">
