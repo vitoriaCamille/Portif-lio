@@ -3,12 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Vitória Camille | Cibersegurança</title>
+  <title>Vitória Camille | Especialista em Cibersegurança</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     :root {
       --primary: #1a1a1a;
       --accent: #2563EB;
+      --accent-dark: #1E40AF;
       --text: #333;
       --background: #f8f9fa;
       --terminal-bg: #1e1e1e;
@@ -34,19 +35,34 @@
       color: var(--terminal-text);
       padding: 2rem;
       z-index: 1000;
-      font-family: 'Courier New', monospace;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
     }
 
     #terminal-output {
-      height: calc(100vh - 120px);
-      overflow-y: auto;
-      margin-bottom: 1rem;
+      margin-bottom: 2rem;
+      max-width: 600px;
     }
 
-    .terminal-header {
-      border-bottom: 1px solid #333;
-      padding-bottom: 0.5rem;
-      margin-bottom: 1rem;
+    .btn-start {
+      background: var(--accent);
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      font-size: 1rem;
+      border-radius: 4px;
+      cursor: pointer;
+      font-family: 'Courier New', monospace;
+      transition: all 0.3s;
+      margin-top: 2rem;
+    }
+
+    .btn-start:hover {
+      background: var(--accent-dark);
+      transform: translateY(-2px);
     }
 
     /* Conteúdo Principal */
@@ -54,46 +70,79 @@
       display: none;
     }
 
-    /* ... (mantenha outros estilos do seu portfólio) ... */
+    header {
+      padding: 1rem;
+      background: rgba(255,255,255,0.9);
+      position: fixed;
+      width: 100%;
+      top: 0;
+      z-index: 100;
+    }
+
+    .hero {
+      padding: 8rem 1rem 4rem;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      text-align: center;
+    }
+
+    .hero-img img {
+      width: 280px;
+      border-radius: 8px;
+      border: 4px solid var(--accent);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      margin-top: 2rem;
+    }
+
+    @media (max-width: 768px) {
+      #terminal-output {
+        padding: 0 1rem;
+      }
+    }
   </style>
 </head>
 <body>
   <!-- Terminal -->
   <div id="terminal">
-    <div class="terminal-header">
-      Portfólio de Segurança - Vitória Camille
-    </div>
     <div id="terminal-output">
-      <p>> Inicializando sistema de segurança...</p>
-      <p>> Verificando credenciais de acesso...</p>
-      <p>> Detectando localização do visitante...</p>
-      <p id="ip-info">> Obtendo informações de rede...</p>
-      <p>> Digite "acessar" para continuar</p>
+      <h2 style="color: var(--terminal-text); margin-bottom: 1rem;">Portfólio de Segurança</h2>
+      <p>> Sistema de autenticação inicializado</p>
+      <p>> Verificando conexão do visitante...</p>
+      <p id="ip-info">> Obtendo endereço IP...</p>
+      <p>> Clique no botão para acessar</p>
     </div>
-    <div style="display:flex;align-items:center;">
-      <span style="margin-right:0.5rem;">></span>
-      <input type="text" id="terminal-input" autofocus style="
-        background: transparent;
-        border: none;
-        color: var(--terminal-text);
-        width: 100%;
-        outline: none;
-        font-family: 'Courier New', monospace;
-      ">
-    </div>
+    <button class="btn-start" id="btn-start">
+      ACESSAR PORTFÓLIO
+    </button>
   </div>
 
   <!-- Conteúdo Principal -->
   <div id="main-content">
-    <!-- ... (seu conteúdo existente) ... -->
+    <header>
+      <h1>Vitória Camille</h1>
+    </header>
+
+    <section class="hero">
+      <div>
+        <h2>Especialista em Cibersegurança</h2>
+        <p>Protegendo sistemas com soluções inovadoras</p>
+      </div>
+      <div class="hero-img">
+        <img src="foto.jpg" alt="Vitória Camille">
+      </div>
+    </section>
+
+    <!-- Adicione suas outras seções aqui -->
   </div>
 
   <script>
-    // Terminal Interativo
-    const terminalInput = document.getElementById('terminal-input');
-    const terminalOutput = document.getElementById('terminal-output');
+    // Elementos do DOM
     const terminal = document.getElementById('terminal');
     const mainContent = document.getElementById('main-content');
+    const btnStart = document.getElementById('btn-start');
     const ipInfo = document.getElementById('ip-info');
 
     // Função para obter o IP
@@ -101,46 +150,32 @@
       try {
         const response = await fetch('https://api.ipify.org?format=json');
         const data = await response.json();
-        ipInfo.innerHTML = `> Conexão detectada: <strong>${data.ip}</strong>`;
-        
-        // Opcional: Obter mais detalhes com outra API
-        const details = await fetch(`https://ipapi.co/${data.ip}/json/`);
-        const locationData = await details.json();
-        ipInfo.innerHTML += `<br>> Localização aproximada: ${locationData.city}, ${locationData.country_name}`;
+        ipInfo.innerHTML = `> Endereço IP detectado: <strong>${data.ip}</strong>`;
       } catch (error) {
-        ipInfo.innerHTML = '> Sistema de geolocalização indisponível';
+        ipInfo.innerHTML = '> Sistema de verificação de IP indisponível';
       }
     }
 
-    // Inicia a verificação de IP
-    getIPInfo();
-
-    // Controle do terminal
-    terminalInput.addEventListener('keypress', function(e) {
-      if (e.key === 'Enter') {
-        const command = this.value.trim().toLowerCase();
-        terminalOutput.innerHTML += `<p>> ${command}</p>`;
-        
-        if (command === 'acessar') {
-          terminalOutput.innerHTML += `<p>> Verificando credenciais...</p>`;
-          setTimeout(() => {
-            terminalOutput.innerHTML += `<p>> Acesso concedido!</p>`;
-            setTimeout(() => {
-              terminal.style.opacity = '0';
-              setTimeout(() => {
-                terminal.style.display = 'none';
-                mainContent.style.display = 'block';
-              }, 500);
-            }, 1000);
-          }, 500);
-        } else {
-          terminalOutput.innerHTML += `<p>> Comando não reconhecido</p>`;
-        }
-        
-        this.value = '';
-        terminalOutput.scrollTop = terminalOutput.scrollHeight;
-      }
+    // Botão de acesso
+    btnStart.addEventListener('click', function() {
+      terminal.innerHTML = `
+        <div style="text-align: center;">
+          <p>> Acesso sendo concedido...</p>
+          <p>> Carregando portfólio...</p>
+        </div>
+      `;
+      
+      setTimeout(() => {
+        terminal.style.opacity = '0';
+        setTimeout(() => {
+          terminal.style.display = 'none';
+          mainContent.style.display = 'block';
+        }, 500);
+      }, 1500);
     });
+
+    // Inicia a verificação de IP quando a página carrega
+    window.addEventListener('DOMContentLoaded', getIPInfo);
   </script>
 </body>
 </html>
