@@ -201,14 +201,46 @@
     .hero-img {
       flex: 1;
       text-align: center;
+      position: relative;
+      perspective: 1000px;
     }
 
-    .hero-img img {
-      max-width: 100%;
-      height: auto;
-      border: 4px solid var(--accent);
+    .profile-image-container {
+      width: 350px;
+      height: 450px;
+      position: relative;
+      transform-style: preserve-3d;
+      transition: transform 0.5s;
+      margin: 0 auto;
+    }
+
+    .profile-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
       border-radius: 8px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+      border: 8px solid var(--background);
+      position: relative;
+      z-index: 2;
+      background-color: #f0f0f0;
+    }
+
+    .profile-image-shadow {
+      position: absolute;
+      width: 90%;
+      height: 90%;
+      background: var(--accent);
+      opacity: 0.2;
+      bottom: -15px;
+      right: -15px;
+      border-radius: 8px;
+      z-index: 1;
+      filter: blur(10px);
+    }
+
+    .profile-image-container:hover {
+      transform: translateY(-5px) rotateX(5deg);
     }
 
     h1 {
@@ -431,6 +463,11 @@
         flex-direction: column;
       }
 
+      .profile-image-container {
+        width: 280px;
+        height: 360px;
+      }
+
       .nav-links {
         display: none;
       }
@@ -456,97 +493,7 @@
     }
   </style>
 </head>
-  <!-- Adicione este código ANTES do </body> -->
-<script>
-  // Terminal de Inicialização - Versão Simplificada
-  document.addEventListener('DOMContentLoaded', function() {
-    const terminal = document.createElement('div');
-    terminal.id = 'terminal-start';
-    terminal.style.cssText = `
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100vh;
-      background: #1a1a1a;
-      color: #4af626;
-      font-family: 'Courier New', monospace;
-      padding: 2rem;
-      z-index: 9999;
-      display: flex;
-      flex-direction: column;
-    `;
-    
-    terminal.innerHTML = `
-      <div style="border-bottom: 1px solid #333; padding-bottom: 0.5rem; margin-bottom: 1rem;">
-        Terminal de Acesso - Segurança Cibernética
-      </div>
-      <div id="terminal-output" style="flex-grow: 1; overflow-y: auto; margin-bottom: 1rem;">
-        <p>> Digite "start" para iniciar...</p>
-      </div>
-      <div style="display: flex; align-items: center;">
-        <span style="margin-right: 0.5rem;">></span>
-        <input type="text" id="terminal-input" style="
-          background: transparent;
-          border: none;
-          color: #4af626;
-          font-family: 'Courier New', monospace;
-          width: 100%;
-          outline: none;
-        " autofocus>
-      </div>
-    `;
-    
-    document.body.prepend(terminal);
-    
-    const terminalInput = document.getElementById('terminal-input');
-    const terminalOutput = document.getElementById('terminal-output');
-    
-    terminalInput.addEventListener('keypress', function(e) {
-      if (e.key === 'Enter') {
-        const command = this.value.trim().toLowerCase();
-        terminalOutput.innerHTML += `<p>> ${command}</p>`;
-        
-        if (command === 'start') {
-          terminalOutput.innerHTML += `<p>> Acesso concedido...</p>`;
-          setTimeout(() => {
-            terminal.style.opacity = '0';
-            setTimeout(() => {
-              terminal.remove();
-              document.getElementById('main-content').style.display = 'block';
-            }, 500);
-          }, 1000);
-        } else {
-          terminalOutput.innerHTML += `<p>> Comando não reconhecido</p>`;
-        }
-        
-        this.value = '';
-        terminalOutput.scrollTop = terminalOutput.scrollHeight;
-      }
-    });
-  });
-</script>
 <body class="theme-blue">
-  <!-- Terminal de Inicialização -->
-  <div id="terminal-start">
-    <div class="terminal-header">
-      <span>Terminal de Acesso - Portfólio de Segurança Cibernética</span>
-      <span>v1.0.0</span>
-    </div>
-    <div class="terminal-content" id="terminal-output">
-      <p>> Inicializando sistema de segurança...</p>
-      <p>> Verificando credenciais...</p>
-      <p>> Carregando módulos de proteção...</p>
-      <p>> Sistema pronto para autenticação.</p>
-      <p>> Digite "start" para acessar o portfólio</p>
-    </div>
-    <div class="terminal-input">
-      <span class="prompt">></span>
-      <input type="text" id="terminal-command" autofocus>
-      <span id="terminal-cursor">_</span>
-    </div>
-  </div>
-
   <!-- Conteúdo Principal -->
   <div id="main-content">
     <header>
@@ -571,7 +518,10 @@
           <a href="#sobre" class="btn">Explorar Portfólio</a>
         </div>
         <div class="hero-img">
-          <img src="https://via.placeholder.com/400x500" alt="Vitória Camille">
+          <div class="profile-image-container">
+            <img src="foto.jpg" alt="Vitória Camille" class="profile-image">
+            <div class="profile-image-shadow"></div>
+          </div>
         </div>
       </div>
     </section>
@@ -685,79 +635,80 @@
     </div>
   </div>
 
+  <!-- Script do Terminal -->
   <script>
     // Terminal de Inicialização
     document.addEventListener('DOMContentLoaded', () => {
+      const terminal = document.createElement('div');
+      terminal.id = 'terminal-start';
+      terminal.style.cssText = `
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100vh;
+        background: #1a1a1a;
+        color: #4af626;
+        font-family: 'Courier New', monospace;
+        padding: 2rem;
+        z-index: 9999;
+        display: flex;
+        flex-direction: column;
+      `;
+      
+      terminal.innerHTML = `
+        <div style="border-bottom: 1px solid #333; padding-bottom: 0.5rem; margin-bottom: 1rem;">
+          Terminal de Acesso - Portfólio Vitória Camille
+        </div>
+        <div id="terminal-output" style="flex-grow: 1; overflow-y: auto; margin-bottom: 1rem;">
+          <p>> Inicializando sistema de segurança...</p>
+          <p>> Verificando credenciais...</p>
+          <p>> Carregando módulos de proteção...</p>
+          <p>> Sistema pronto para autenticação.</p>
+          <p>> Digite "start" para acessar o portfólio</p>
+        </div>
+        <div style="display: flex; align-items: center;">
+          <span style="margin-right: 0.5rem;">></span>
+          <input type="text" id="terminal-input" style="
+            background: transparent;
+            border: none;
+            color: #4af626;
+            font-family: 'Courier New', monospace;
+            width: 100%;
+            outline: none;
+          " autofocus>
+          <span id="terminal-cursor" style="animation: blink 1s infinite;">_</span>
+        </div>
+      `;
+      
+      document.body.prepend(terminal);
+      
+      const terminalInput = document.getElementById('terminal-input');
       const terminalOutput = document.getElementById('terminal-output');
-      const terminalCommand = document.getElementById('terminal-command');
-      const mainContent = document.getElementById('main-content');
       
-      // Simula digitação
-      const messages = [
-        "> Inicializando sistema de segurança...",
-        "> Verificando credenciais...",
-        "> Carregando módulos de proteção...",
-        "> Sistema pronto para autenticação.",
-        "> Digite \"start\" para acessar o portfólio"
-      ];
-      
-      let currentMessage = 0;
-      let currentChar = 0;
-      let isTyping = true;
-      
-      function typeWriter() {
-        if (currentMessage < messages.length) {
-          if (currentChar === 0) {
-            terminalOutput.innerHTML += '<p>> </p>';
-          }
-          
-          const currentParagraph = terminalOutput.lastElementChild;
-          
-          if (currentChar < messages[currentMessage].length) {
-            currentParagraph.textContent += messages[currentMessage].charAt(currentChar);
-            currentChar++;
-            setTimeout(typeWriter, 20);
-          } else {
-            currentMessage++;
-            currentChar = 0;
-            setTimeout(typeWriter, 500);
-          }
-        } else {
-          isTyping = false;
-          terminalCommand.focus();
-        }
-      }
-      
-      typeWriter();
-      
-      terminalCommand.addEventListener('keypress', (e) => {
+      terminalInput.addEventListener('keypress', function(e) {
         if (e.key === 'Enter') {
-          const command = terminalCommand.value.trim().toLowerCase();
+          const command = this.value.trim().toLowerCase();
+          terminalOutput.innerHTML += `<p>> ${command}</p>`;
           
-          if (!isTyping) {
-            terminalOutput.innerHTML += `<p>> ${command}</p>`;
-            
-            if (command === 'start') {
-              terminalOutput.innerHTML += `<p>> Acesso concedido...</p>`;
-              terminalOutput.innerHTML += `<p>> Carregando interface gráfica...</p>`;
-              
+          if (command === 'start') {
+            terminalOutput.innerHTML += `<p>> Acesso concedido...</p>`;
+            setTimeout(() => {
+              terminal.style.opacity = '0';
               setTimeout(() => {
-                document.getElementById('terminal-start').style.opacity = '0';
+                terminal.remove();
+                document.getElementById('main-content').style.display = 'block';
                 setTimeout(() => {
-                  document.getElementById('terminal-start').style.display = 'none';
-                  mainContent.style.display = 'block';
-                  setTimeout(() => {
-                    mainContent.style.opacity = '1';
-                  }, 100);
-                }, 500);
-              }, 1500);
-            } else {
-              terminalOutput.innerHTML += `<p>> Comando não reconhecido. Digite "start" para continuar.</p>`;
-            }
-            
-            terminalCommand.value = '';
-            terminalOutput.scrollTop = terminalOutput.scrollHeight;
+                  document.getElementById('main-content').style.opacity = '1';
+                }, 50);
+              }, 500);
+            }, 1000);
+          } else {
+            terminalOutput.innerHTML += `<p>> Comando não reconhecido</p>`;
           }
+          
+          this.value = '';
+          terminalOutput.scrollTop = terminalOutput.scrollHeight;
         }
       });
     });
@@ -784,15 +735,4 @@
       }
       
       // Abre o jogo
-      hackBtn.addEventListener('click', () => {
-        hackingGame.style.display = 'block';
-        resetGame();
-      });
-      
-      // Fecha o jogo
-      closeGameBtn.addEventListener('click', () => {
-        hackingGame.style.display = 'none';
-      });
-      
-      // Lógica do jogo
-      function handleButtonClick(btnNumb
+      hackBtn.ad
