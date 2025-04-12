@@ -3,80 +3,81 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Vitória Camille | Segurança Cibernética</title>
+  <title>Vitória Camille | Especialista em Cibersegurança</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
-    /* Cores e Variáveis */
+    /* Variáveis de tema */
     :root {
       --primary: #1a1a1a;
-      --accent: #2563eb;
-      --accent-hover: #1d4ed8;
-      --text: #333;
-      --background: #f8f9fa;
-      --card-bg: #ffffff;
+      --secondary: #333333;
+      --accent: #2563EB;
+      --accent-dark: #1E40AF;
+      --text: #2D3748;
+      --text-light: #4A5568;
+      --background: #FFFFFF;
+      --border: #E2E8F0;
+      --card-bg: #FFFFFF;
       --terminal-bg: #1e1e1e;
       --terminal-text: #4af626;
-      --hacker-green: #10b981;
+      --hacker-green: #10B981;
     }
 
-    /* Efeitos Globais */
-    @keyframes glitch {
-      0% { transform: translate(0); }
-      20% { transform: translate(-2px, 2px); }
-      40% { transform: translate(-2px, -2px); }
-      60% { transform: translate(2px, 2px); }
-      80% { transform: translate(2px, -2px); }
-      100% { transform: translate(0); }
+    /* Tema Verde Tech */
+    .theme-green {
+      --accent: #10B981;
+      --accent-dark: #047857;
+      --hacker-green: #2563EB;
     }
 
-    @keyframes terminal-blink {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0; }
-    }
-
-    /* Layout Principal */
-    body {
+    /* Reset e Estilos Globais */
+    * {
       margin: 0;
-      font-family: 'Courier New', monospace;
-      background: var(--background);
-      color: var(--text);
-      overflow-x: hidden;
+      padding: 0;
+      box-sizing: border-box;
     }
 
-    /* Terminal de Início */
+    body {
+      font-family: 'Courier New', monospace, sans-serif;
+      background-color: var(--background);
+      color: var(--text);
+      line-height: 1.6;
+      overflow-x: hidden;
+      transition: background-color 0.3s, color 0.3s;
+    }
+
+    /* Terminal de Inicialização */
     #terminal-start {
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
       height: 100vh;
-      background: var(--terminal-bg);
+      background-color: var(--terminal-bg);
       color: var(--terminal-text);
       padding: 2rem;
-      box-sizing: border-box;
-      font-family: 'Courier New', monospace;
-      z-index: 1000;
+      z-index: 9999;
       display: flex;
       flex-direction: column;
+      font-family: 'Courier New', monospace;
     }
 
     .terminal-header {
       display: flex;
       justify-content: space-between;
       margin-bottom: 1rem;
-      border-bottom: 1px solid #333;
       padding-bottom: 0.5rem;
+      border-bottom: 1px solid #333;
     }
 
     .terminal-content {
       flex-grow: 1;
       overflow-y: auto;
+      margin-bottom: 1rem;
     }
 
     .terminal-input {
       display: flex;
       align-items: center;
-      margin-top: 1rem;
     }
 
     .prompt {
@@ -84,97 +85,52 @@
       margin-right: 0.5rem;
     }
 
-    #terminal-cursor {
-      animation: terminal-blink 1s infinite;
-    }
-
-    /* Mini Jogo de Hacking */
-    #hacking-game {
-      position: fixed;
-      bottom: 2rem;
-      right: 2rem;
-      width: 300px;
-      background: var(--terminal-bg);
-      border: 2px solid var(--hacker-green);
-      border-radius: 8px;
-      padding: 1rem;
-      color: var(--terminal-text);
-      display: none;
-      z-index: 500;
-    }
-
-    .game-header {
-      display: flex;
-      justify-content: space-between;
-      margin-bottom: 1rem;
-    }
-
-    .close-game {
-      cursor: pointer;
-      color: #ff5555;
-    }
-
-    .game-progress {
-      height: 20px;
-      background: #333;
-      border-radius: 10px;
-      margin-bottom: 1rem;
-      overflow: hidden;
-    }
-
-    .progress-bar {
-      height: 100%;
-      width: 0%;
-      background: var(--hacker-green);
-      transition: width 0.3s;
-    }
-
-    .game-buttons {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 0.5rem;
-    }
-
-    .game-btn {
-      background: #333;
+    #terminal-command {
+      background: transparent;
       border: none;
       color: var(--terminal-text);
-      padding: 0.5rem;
-      border-radius: 4px;
-      cursor: pointer;
-      transition: all 0.2s;
+      font-family: 'Courier New', monospace;
+      font-size: 1rem;
+      width: 100%;
+      outline: none;
     }
 
-    .game-btn:hover {
-      background: var(--hacker-green);
-      color: #000;
+    #terminal-cursor {
+      animation: blink 1s infinite;
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
     }
 
     /* Conteúdo Principal */
     #main-content {
       display: none;
       opacity: 0;
-      transition: opacity 1s;
+      transition: opacity 0.5s;
     }
 
     header {
       position: fixed;
       top: 0;
       width: 100%;
-      background: rgba(248, 249, 250, 0.9);
+      background-color: rgba(255, 255, 255, 0.95);
       backdrop-filter: blur(10px);
       padding: 1rem 2rem;
       z-index: 100;
       display: flex;
       justify-content: space-between;
       align-items: center;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     }
 
     .logo {
-      font-weight: bold;
+      font-weight: 700;
       font-size: 1.5rem;
       color: var(--primary);
       text-decoration: none;
+      font-family: 'Courier New', monospace;
     }
 
     .nav-links {
@@ -183,9 +139,15 @@
     }
 
     .nav-links a {
-      color: var(--text);
+      color: var(--text-light);
       text-decoration: none;
+      font-weight: 500;
       position: relative;
+      transition: color 0.3s;
+    }
+
+    .nav-links a:hover {
+      color: var(--accent);
     }
 
     .nav-links a::after {
@@ -195,7 +157,7 @@
       left: 0;
       width: 0;
       height: 2px;
-      background: var(--accent);
+      background-color: var(--accent);
       transition: width 0.3s;
     }
 
@@ -203,26 +165,23 @@
       width: 100%;
     }
 
-    .hacker-btn {
-      background: var(--terminal-bg);
-      color: var(--terminal-text);
-      border: 1px solid var(--hacker-green);
-      padding: 0.5rem 1rem;
-      border-radius: 4px;
+    .theme-toggle {
+      background: none;
+      border: none;
       cursor: pointer;
-      transition: all 0.3s;
-      font-family: 'Courier New', monospace;
+      color: var(--text-light);
+      font-size: 1.2rem;
+      transition: color 0.3s;
     }
 
-    .hacker-btn:hover {
-      background: var(--hacker-green);
-      color: #000;
-      box-shadow: 0 0 10px var(--hacker-green);
+    .theme-toggle:hover {
+      color: var(--accent);
     }
 
-    section {
+    /* Seção Hero */
+    .hero {
+      padding: 10rem 2rem 6rem;
       min-height: 100vh;
-      padding: 6rem 2rem 2rem;
       display: flex;
       align-items: center;
     }
@@ -241,39 +200,229 @@
 
     .hero-img {
       flex: 1;
+      text-align: center;
     }
 
     .hero-img img {
       max-width: 100%;
+      height: auto;
+      border: 4px solid var(--accent);
       border-radius: 8px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
     }
 
     h1 {
       font-size: 3rem;
-      margin-bottom: 1rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 1.5rem;
+      line-height: 1.2;
     }
 
     .subtitle {
       font-size: 1.5rem;
+      color: var(--text-light);
       margin-bottom: 2rem;
-      color: #666;
+      font-weight: 400;
     }
 
     .btn {
       display: inline-block;
-      background: var(--accent);
+      background-color: var(--accent);
       color: white;
       padding: 0.8rem 1.5rem;
-      border-radius: 4px;
       text-decoration: none;
+      border-radius: 4px;
+      font-weight: 500;
       transition: all 0.3s;
     }
 
     .btn:hover {
-      background: var(--accent-hover);
+      background-color: var(--accent-dark);
       transform: translateY(-3px);
-      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Seções */
+    section {
+      padding: 6rem 2rem;
+      border-top: 1px solid var(--border);
+    }
+
+    h2 {
+      font-size: 2rem;
+      font-weight: 600;
+      color: var(--primary);
+      margin-bottom: 2rem;
+      position: relative;
+      display: inline-block;
+    }
+
+    h2::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background-color: var(--accent);
+    }
+
+    /* Projetos */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+
+    .project-card {
+      background-color: var(--card-bg);
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+      transition: all 0.3s;
+      border: 1px solid var(--border);
+    }
+
+    .project-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+      border-color: var(--accent);
+    }
+
+    .project-content {
+      padding: 1.5rem;
+    }
+
+    .project-title {
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      color: var(--primary);
+    }
+
+    .project-description {
+      color: var(--text-light);
+      margin-bottom: 1rem;
+    }
+
+    .project-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .tag {
+      background-color: #EBF8FF;
+      color: var(--accent);
+      padding: 0.3rem 0.8rem;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 500;
+    }
+
+    /* Mini Jogo de Hacking */
+    #hacking-game {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      width: 300px;
+      background-color: var(--terminal-bg);
+      border: 2px solid var(--hacker-green);
+      border-radius: 8px;
+      padding: 1rem;
+      color: var(--terminal-text);
+      z-index: 500;
+      display: none;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    .game-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid #333;
+    }
+
+    .game-title {
+      font-weight: 600;
+    }
+
+    .close-game {
+      cursor: pointer;
+      color: #ff5555;
+      font-weight: bold;
+    }
+
+    .game-progress {
+      height: 20px;
+      background-color: #333;
+      border-radius: 10px;
+      margin-bottom: 1rem;
+      overflow: hidden;
+    }
+
+    .progress-bar {
+      height: 100%;
+      width: 0%;
+      background-color: var(--hacker-green);
+      transition: width 0.3s;
+    }
+
+    .game-instructions {
+      margin-bottom: 1rem;
+      font-size: 0.9rem;
+    }
+
+    .game-buttons {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0.5rem;
+    }
+
+    .game-btn {
+      background-color: #333;
+      color: var(--terminal-text);
+      border: none;
+      padding: 0.5rem;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-family: 'Courier New', monospace;
+      font-weight: bold;
+    }
+
+    .game-btn:hover {
+      background-color: var(--hacker-green);
+      color: #000;
+    }
+
+    .hack-btn {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      width: 50px;
+      height: 50px;
+      background-color: var(--hacker-green);
+      color: white;
+      border: none;
+      border-radius: 50%;
+      font-size: 1.2rem;
+      cursor: pointer;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+      z-index: 400;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s;
+    }
+
+    .hack-btn:hover {
+      transform: scale(1.1);
+      box-shadow: 0 0 20px var(--hacker-green);
     }
 
     /* Responsividade */
@@ -281,22 +430,37 @@
       .hero-content {
         flex-direction: column;
       }
-      
+
       .nav-links {
         display: none;
       }
-      
+
       #hacking-game {
         width: calc(100% - 4rem);
+        bottom: 1rem;
+        right: 1rem;
+      }
+
+      .hack-btn {
+        bottom: 1rem;
+        right: 1rem;
+      }
+
+      h1 {
+        font-size: 2.2rem;
+      }
+
+      .subtitle {
+        font-size: 1.2rem;
       }
     }
   </style>
 </head>
-<body>
-  <!-- Terminal de Início -->
+<body class="theme-blue">
+  <!-- Terminal de Inicialização -->
   <div id="terminal-start">
     <div class="terminal-header">
-      <span>Terminal de Acesso - Segurança Cibernética</span>
+      <span>Terminal de Acesso - Portfólio de Segurança Cibernética</span>
       <span>v1.0.0</span>
     </div>
     <div class="terminal-content" id="terminal-output">
@@ -313,21 +477,6 @@
     </div>
   </div>
 
-  <!-- Mini Jogo de Hacking -->
-  <div id="hacking-game">
-    <div class="game-header">
-      <h3>Hack The System</h3>
-      <span class="close-game" onclick="closeGame()">X</span>
-    </div>
-    <div class="game-progress">
-      <div class="progress-bar" id="game-progress"></div>
-    </div>
-    <p>Decifre o código para ganhar acesso:</p>
-    <div class="game-buttons" id="game-buttons">
-      <!-- Botões serão gerados por JavaScript -->
-    </div>
-  </div>
-
   <!-- Conteúdo Principal -->
   <div id="main-content">
     <header>
@@ -338,10 +487,13 @@
         <a href="#certificacoes">Certificações</a>
         <a href="#contato">Contato</a>
       </nav>
-      <button class="hacker-btn" onclick="openGame()">Hack The System</button>
+      <button class="theme-toggle" id="themeToggle">
+        <i class="fas fa-palette"></i>
+      </button>
     </header>
 
-    <section id="hero">
+    <!-- Seção Hero -->
+    <section class="hero" id="hero">
       <div class="hero-content">
         <div class="hero-text">
           <h1>Segurança Cibernética com Propósito</h1>
@@ -349,103 +501,228 @@
           <a href="#sobre" class="btn">Explorar Portfólio</a>
         </div>
         <div class="hero-img">
-          <img src="foto.jpg" alt="Vitória Camille">
+          <img src="https://via.placeholder.com/400x500" alt="Vitória Camille">
         </div>
       </div>
     </section>
 
-    <!-- Outras seções seriam adicionadas aqui -->
+    <!-- Seção Sobre -->
+    <section id="sobre">
+      <h2>Sobre Mim</h2>
+      <p>Graduanda em Análise e Desenvolvimento de Sistemas com especialização em segurança cibernética. Combino conhecimento técnico com uma abordagem estratégica para proteger sistemas críticos.</p>
+      
+      <h3 style="margin-top: 2rem; color: var(--primary);">Áreas de Expertise</h3>
+      <ul>
+        <li>Análise de vulnerabilidades e testes de penetração</li>
+        <li>Implementação de frameworks de segurança (ISO 27001, NIST)</li>
+        <li>Monitoramento proativo de redes e análise forense</li>
+        <li>Treinamento e conscientização em segurança da informação</li>
+      </ul>
+    </section>
+
+    <!-- Seção Projetos -->
+    <section id="projetos">
+      <h2>Projetos Recentes</h2>
+      <div class="projects-grid">
+        <div class="project-card">
+          <div class="project-content">
+            <h3 class="project-title">Monitoramento de Rede Avançado</h3>
+            <p class="project-description">Sistema desenvolvido em Python utilizando Scapy para captura e análise de pacotes em tempo real, integrado com Grafana para visualização de dados.</p>
+            <div class="project-tags">
+              <span class="tag">Python</span>
+              <span class="tag">Scapy</span>
+              <span class="tag">Grafana</span>
+            </div>
+          </div>
+        </div>
+        
+        <div class="project-card">
+          <div class="project-content">
+            <h3 class="project-title">Write-up CTF</h3>
+            <p class="project-description">Documentação técnica detalhada de resolução de máquinas desafiadoras, abordando desde reconhecimento até exploração e escalação de privilégios.</p>
+            <div class="project-tags">
+              <span class="tag">Pentesting</span>
+              <span class="tag">CTF</span>
+              <span class="tag">Red Team</span>
+            </div>
+          </div>
+        </div>
+        
+        <div class="project-card">
+          <div class="project-content">
+            <h3 class="project-title">Análise de Logs Automatizada</h3>
+            <p class="project-description">Ferramenta em Bash para processamento automatizado de logs de servidores, com detecção de padrões suspeitos e geração de relatórios consolidados.</p>
+            <div class="project-tags">
+              <span class="tag">Bash</span>
+              <span class="tag">Linux</span>
+              <span class="tag">SIEM</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Seção Certificações -->
+    <section id="certificacoes">
+      <h2>Certificações</h2>
+      <ul>
+        <li><strong>ISO 27001: Fundamentos de Segurança da Informação</strong> - BSI (2023)</li>
+        <li><strong>LGPD e Proteção de Dados</strong> - EXIN (2023)</li>
+        <li><strong>Certified Ethical Hacker (CEH)</strong> - EC-Council (Em progresso)</li>
+        <li><strong>Análise e Desenvolvimento de Sistemas</strong> - Previsão de conclusão: 2025</li>
+      </ul>
+    </section>
+
+    <!-- Seção Contato -->
+    <section id="contato">
+      <h2>Contato</h2>
+      <p>Estou sempre aberta a discutir novos projetos, oportunidades de colaboração ou simplesmente conversar sobre segurança cibernética.</p>
+      
+      <div class="contact-info" style="margin-top: 2rem;">
+        <div class="contact-item" style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem;">
+          <i class="fas fa-envelope" style="color: var(--accent);"></i>
+          <a href="mailto:contato@exemplo.com" style="color: var(--text); text-decoration: none;">contato@exemplo.com</a>
+        </div>
+        <div class="contact-item" style="display: flex; align-items: center; gap: 0.5rem;">
+          <i class="fas fa-map-marker-alt" style="color: var(--accent);"></i>
+          <span>São Paulo, Brasil</span>
+        </div>
+      </div>
+      
+      <div class="social-icons" style="display: flex; gap: 1.5rem; margin-top: 2rem;">
+        <a href="https://linkedin.com" target="_blank" style="color: var(--text-light); font-size: 1.5rem;"><i class="fab fa-linkedin"></i></a>
+        <a href="https://github.com" target="_blank" style="color: var(--text-light); font-size: 1.5rem;"><i class="fab fa-github"></i></a>
+        <a href="https://twitter.com" target="_blank" style="color: var(--text-light); font-size: 1.5rem;"><i class="fab fa-twitter"></i></a>
+      </div>
+    </section>
+
+    <!-- Botão do Jogo de Hacking -->
+    <button class="hack-btn" id="hackBtn">🔒</button>
+
+    <!-- Mini Jogo de Hacking -->
+    <div id="hacking-game">
+      <div class="game-header">
+        <h3 class="game-title">Hack The System</h3>
+        <span class="close-game" id="closeGame">X</span>
+      </div>
+      <div class="game-progress">
+        <div class="progress-bar" id="progressBar"></div>
+      </div>
+      <p class="game-instructions">Decifre o código para ganhar acesso:</p>
+      <div class="game-buttons" id="gameButtons">
+        <!-- Botões serão gerados por JavaScript -->
+      </div>
+    </div>
   </div>
 
   <script>
-    // Terminal de Início
-    const terminalOutput = document.getElementById('terminal-output');
-    const terminalCommand = document.getElementById('terminal-command');
-    const mainContent = document.getElementById('main-content');
-
-    terminalCommand.addEventListener('keypress', function(e) {
-      if (e.key === 'Enter') {
-        const command = terminalCommand.value.trim().toLowerCase();
-        terminalOutput.innerHTML += `<p>> ${command}</p>`;
-        
-        if (command === 'start') {
-          // Efeito de inicialização
-          terminalOutput.innerHTML += `<p>> Acesso concedido...</p>`;
-          terminalOutput.innerHTML += `<p>> Carregando interface gráfica...</p>`;
+    // Terminal de Inicialização
+    document.addEventListener('DOMContentLoaded', () => {
+      const terminalOutput = document.getElementById('terminal-output');
+      const terminalCommand = document.getElementById('terminal-command');
+      const mainContent = document.getElementById('main-content');
+      
+      // Simula digitação
+      const messages = [
+        "> Inicializando sistema de segurança...",
+        "> Verificando credenciais...",
+        "> Carregando módulos de proteção...",
+        "> Sistema pronto para autenticação.",
+        "> Digite \"start\" para acessar o portfólio"
+      ];
+      
+      let currentMessage = 0;
+      let currentChar = 0;
+      let isTyping = true;
+      
+      function typeWriter() {
+        if (currentMessage < messages.length) {
+          if (currentChar === 0) {
+            terminalOutput.innerHTML += '<p>> </p>';
+          }
           
-          setTimeout(() => {
-            document.getElementById('terminal-start').style.opacity = '0';
-            setTimeout(() => {
-              document.getElementById('terminal-start').style.display = 'none';
-              mainContent.style.display = 'block';
-              setTimeout(() => {
-                mainContent.style.opacity = '1';
-              }, 100);
-            }, 1000);
-          }, 1500);
+          const currentParagraph = terminalOutput.lastElementChild;
+          
+          if (currentChar < messages[currentMessage].length) {
+            currentParagraph.textContent += messages[currentMessage].charAt(currentChar);
+            currentChar++;
+            setTimeout(typeWriter, 20);
+          } else {
+            currentMessage++;
+            currentChar = 0;
+            setTimeout(typeWriter, 500);
+          }
         } else {
-          terminalOutput.innerHTML += `<p>> Comando não reconhecido. Digite "start" para continuar.</p>`;
+          isTyping = false;
+          terminalCommand.focus();
         }
-        
-        terminalCommand.value = '';
-        terminalOutput.scrollTop = terminalOutput.scrollHeight;
       }
+      
+      typeWriter();
+      
+      terminalCommand.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+          const command = terminalCommand.value.trim().toLowerCase();
+          
+          if (!isTyping) {
+            terminalOutput.innerHTML += `<p>> ${command}</p>`;
+            
+            if (command === 'start') {
+              terminalOutput.innerHTML += `<p>> Acesso concedido...</p>`;
+              terminalOutput.innerHTML += `<p>> Carregando interface gráfica...</p>`;
+              
+              setTimeout(() => {
+                document.getElementById('terminal-start').style.opacity = '0';
+                setTimeout(() => {
+                  document.getElementById('terminal-start').style.display = 'none';
+                  mainContent.style.display = 'block';
+                  setTimeout(() => {
+                    mainContent.style.opacity = '1';
+                  }, 100);
+                }, 500);
+              }, 1500);
+            } else {
+              terminalOutput.innerHTML += `<p>> Comando não reconhecido. Digite "start" para continuar.</p>`;
+            }
+            
+            terminalCommand.value = '';
+            terminalOutput.scrollTop = terminalOutput.scrollHeight;
+          }
+        }
+      });
     });
 
     // Mini Jogo de Hacking
-    let gameProgress = 0;
-    const codeSequence = [3, 1, 4, 2];
-    let playerSequence = [];
-    
-    function openGame() {
-      document.getElementById('hacking-game').style.display = 'block';
-      initGame();
-    }
-    
-    function closeGame() {
-      document.getElementById('hacking-game').style.display = 'none';
-      resetGame();
-    }
-    
-    function initGame() {
-      const gameButtons = document.getElementById('game-buttons');
-      gameButtons.innerHTML = '';
+    document.addEventListener('DOMContentLoaded', () => {
+      const hackBtn = document.getElementById('hackBtn');
+      const hackingGame = document.getElementById('hacking-game');
+      const closeGameBtn = document.getElementById('closeGame');
+      const gameButtons = document.getElementById('gameButtons');
+      const progressBar = document.getElementById('progressBar');
       
+      const codeSequence = [3, 1, 4, 2];
+      let playerSequence = [];
+      let gameProgress = 0;
+      
+      // Cria botões do jogo
       for (let i = 1; i <= 4; i++) {
         const btn = document.createElement('button');
         btn.className = 'game-btn';
         btn.textContent = i;
-        btn.onclick = function() { handleButtonClick(i); };
+        btn.addEventListener('click', () => handleButtonClick(i));
         gameButtons.appendChild(btn);
       }
-    }
-    
-    function handleButtonClick(btnNumber) {
-      playerSequence.push(btnNumber);
       
-      // Verifica se o botão pressionado está na sequência correta
-      if (playerSequence[playerSequence.length - 1] === codeSequence[playerSequence.length - 1]) {
-        gameProgress += 25;
-        document.getElementById('game-progress').style.width = gameProgress + '%';
-        
-        if (gameProgress === 100) {
-          setTimeout(() => {
-            alert('Sistema hackeado com sucesso! Acesso total concedido.');
-            closeGame();
-          }, 500);
-        }
-      } else {
-        // Sequência incorreta - reinicia
-        alert('Sequência incorreta! Tentando novamente...');
+      // Abre o jogo
+      hackBtn.addEventListener('click', () => {
+        hackingGame.style.display = 'block';
         resetGame();
-      }
-    }
-    
-    function resetGame() {
-      gameProgress = 0;
-      playerSequence = [];
-      document.getElementById('game-progress').style.width = '0%';
-    }
-  </script>
-</body>
-</html>
+      });
+      
+      // Fecha o jogo
+      closeGameBtn.addEventListener('click', () => {
+        hackingGame.style.display = 'none';
+      });
+      
+      // Lógica do jogo
+      function handleButtonClick(btnNumb
