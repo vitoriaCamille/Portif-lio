@@ -11,10 +11,29 @@
       --primary: #1A1A1A;
       --secondary: #333333;
       --accent: #2B6CB0;
+      --accent-dark: #2C5282;
       --text: #2D3748;
       --text-light: #4A5568;
       --background: #FFFFFF;
       --border: #E2E8F0;
+      --tag-bg: #EBF8FF;
+      --tag-text: #2B6CB0;
+    }
+    
+    /* Tema Azul (default) */
+    .theme-blue {
+      --accent: #2B6CB0;
+      --accent-dark: #2C5282;
+      --tag-bg: #EBF8FF;
+      --tag-text: #2B6CB0;
+    }
+    
+    /* Tema Verde Tech */
+    .theme-green {
+      --accent: #2F855A;
+      --accent-dark: #276749;
+      --tag-bg: #F0FFF4;
+      --tag-text: #2F855A;
     }
     
     body {
@@ -59,6 +78,7 @@
       display: flex;
       gap: 2rem;
       list-style: none;
+      align-items: center;
     }
     
     .nav-links a {
@@ -69,6 +89,19 @@
     }
     
     .nav-links a:hover {
+      color: var(--accent);
+    }
+    
+    .theme-switcher {
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 1.2rem;
+      color: var(--text-light);
+      transition: all 0.2s ease;
+    }
+    
+    .theme-switcher:hover {
       color: var(--accent);
     }
     
@@ -94,10 +127,10 @@
     
     .hero-img img {
       width: 280px;
-      height: 280px;
+      height: auto;
       object-fit: cover;
-      border-radius: 50%;
       border: 4px solid var(--border);
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     }
     
     h1 {
@@ -127,7 +160,7 @@
     }
     
     .btn:hover {
-      background: #2C5282;
+      background: var(--accent-dark);
       transform: translateY(-2px);
     }
     
@@ -187,8 +220,8 @@
     }
     
     .tag {
-      background: #EBF8FF;
-      color: var(--accent);
+      background: var(--tag-bg);
+      color: var(--tag-text);
       padding: 0.3rem 0.8rem;
       border-radius: 20px;
       font-size: 0.8rem;
@@ -268,7 +301,6 @@
       
       .hero-img img {
         width: 200px;
-        height: 200px;
       }
       
       .nav-links {
@@ -282,7 +314,7 @@
     }
   </style>
 </head>
-<body>
+<body class="theme-blue">
   <header>
     <div class="container">
       <nav>
@@ -292,6 +324,11 @@
           <li><a href="#projetos">Projetos</a></li>
           <li><a href="#certificacoes">Certificações</a></li>
           <li><a href="#contato">Contato</a></li>
+          <li>
+            <button class="theme-switcher" id="themeSwitcher" title="Mudar tema">
+              <i class="fas fa-palette"></i>
+            </button>
+          </li>
         </ul>
       </nav>
     </div>
@@ -400,5 +437,24 @@
   <footer>
     <p>&copy; 2024 Vitória Camille Ramos Ferreira. Todos os direitos reservados.</p>
   </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const themeSwitcher = document.getElementById('themeSwitcher');
+      
+      themeSwitcher.addEventListener('click', function() {
+        const body = document.body;
+        if (body.classList.contains('theme-blue')) {
+          body.classList.remove('theme-blue');
+          body.classList.add('theme-green');
+          themeSwitcher.innerHTML = '<i class="fas fa-palette"></i> Tema Azul';
+        } else {
+          body.classList.remove('theme-green');
+          body.classList.add('theme-blue');
+          themeSwitcher.innerHTML = '<i class="fas fa-palette"></i> Tema Verde';
+        }
+      });
+    });
+  </script>
 </body>
-</html>
+  </html>
