@@ -1,104 +1,68 @@
+
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Portfólio | João Silva</title>
-  <link rel="stylesheet" href="style.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-  <link href="https://fonts.googleapis.com/css2?family=Fira+Code&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Vitória Camille - Cibersegurança</title>
+  <link rel="stylesheet" href="style.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
 </head>
 <body>
-  <nav>
-    <div class="logo">João Silva</div>
-    <ul>
-      <li><a href="#home">Início</a></li>
-      <li><a href="#python">Python</a></li>
-      <li><a href="#cyber">Cibersegurança</a></li>
-      <li><a href="#iso27001">ISO 27001</a></li>
-      <li><a href="#contato">Contato</a></li>
-    </ul>
-    <button id="toggle-theme" class="theme-btn">Alternar Cor</button>
-  </nav>
+  <header>
+    <nav>
+      <div class="logo">Vitória Camille</div>
+      <ul class="nav-links">
+        <li><a href="#sobre">Sobre</a></li>
+        <li><a href="#projetos">Projetos</a></li>
+        <li><a href="#certificacoes">Certificações</a></li>
+        <li><a href="#contato">Contato</a></li>
+      </ul>
+    </nav>
+  </header>
 
-  <section id="home" class="hero">
+  <section class="hero">
     <div class="hero-text">
-      <h1>João Silva</h1>
-      <h2>Especialista em Cibersegurança & Python</h2>
-      <p>Desenvolvo sistemas de monitoramento e implemento controles de segurança alinhados à ISO 27001.</p>
+      <h1>Vitória Camille Ramos Ferreira</h1>
+      <p>Profissional de Cibersegurança | Apaixonada por tecnologia, proteção de dados e segurança da informação.</p>
+      <a href="https://www.linkedin.com/in/vitória-ferreira-04754120a" target="_blank" class="btn">LinkedIn</a>
     </div>
-    <div class="hero-image">
-      <img src="images/cyber-hero.png" alt="Ilustração de segurança">
-    </div>
-  </section>
-
-  <section id="python" class="section">
-    <h2>Projeto: Monitoramento de Rede em Python</h2>
-    <div class="project-details">
-      <div class="code-snippet">
-        <pre><code class="python">
-import psutil
-def check_cpu():
-    return psutil.cpu_percent(interval=1)
-        </code></pre>
-      </div>
-      <div class="project-description">
-        <h3>Tecnologias Usadas</h3>
-        <ul>
-          <li>Scapy</li>
-          <li>Grafana</li>
-        </ul>
-        <a href="#" class="btn">Ver no GitHub</a>
-      </div>
+    <div class="hero-img">
+      <img src="foto.jpg" alt="Vitória Camille"/>
     </div>
   </section>
 
-  <section id="cyber" class="section">
-    <h2>Cibersegurança</h2>
-    <div class="cyber-grid">
-      <div class="card">
-        <h3>Pentest em Aplicação Web</h3>
-        <p>Relatório de vulnerabilidades (SQLi, XSS).</p>
-        <a href="#" class="btn">PDF Exemplo</a>
-      </div>
-      <div class="card">
-        <h3>CTF Write-up</h3>
-        <p>Solução de desafio do HackTheBox.</p>
-        <a href="#" class="btn">Ler Artigo</a>
-      </div>
-    </div>
+  <section id="sobre" class="section">
+    <h2>Sobre Mim</h2>
+    <p>Graduanda em Análise e Desenvolvimento de Sistemas. Tenho foco em cibersegurança, com conhecimentos em ISO 27001, análise de riscos e boas práticas de proteção de dados. Meu objetivo é contribuir com soluções seguras e inovadoras no universo digital.</p>
   </section>
 
-  <section id="iso27001" class="section">
-    <h2>ISO 27001</h2>
-    <div class="documents">
-      <div class="doc-card">
-        <h3>Matriz de Riscos</h3>
-        <p>Exemplo anônimo de avaliação de ativos.</p>
-        <a href="#" class="btn">Download</a>
-      </div>
-      <div class="doc-card">
-        <h3>Política de Segurança</h3>
-        <p>Trecho da política de acesso lógico.</p>
-        <a href="#" class="btn">Visualizar</a>
-      </div>
-    </div>
+  <section id="projetos" class="section">
+    <h2>Projetos</h2>
+    <ul>
+      <li><strong>Monitoramento de rede em Python</strong> - Script usando Scapy + visualização em Grafana.</li>
+      <li><strong>Write-up CTF</strong> - Desafio resolvido na plataforma Hack The Box.</li>
+    </ul>
   </section>
 
-  <section id="contato" class="section contato">
+  <section id="certificacoes" class="section">
+    <h2>Certificações</h2>
+    <ul>
+      <li>ISO 27001: Fundamentos de Segurança da Informação</li>
+      <li>LGPD e Proteção de Dados</li>
+    </ul>
+  </section>
+
+  <section id="contato" class="section">
     <h2>Contato</h2>
-    <div class="social-links">
-      <a href="#"><i class="fab fa-linkedin"></i></a>
-      <a href="#"><i class="fab fa-github"></i></a>
+    <p>Email: seuemail@exemplo.com</p>
+    <div class="social-icons">
+      <a href="https://www.linkedin.com/in/vitória-ferreira-04754120a" target="_blank"><i class="fab fa-linkedin"></i></a>
     </div>
-    <p>✉️ email@profissional.com</p>
   </section>
 
-  <script>
-    const btn = document.getElementById('toggle-theme');
-    btn.addEventListener('click', () => {
-      document.body.classList.toggle('tema-claro');
-    });
-  </script>
+  <footer>
+    <p>&copy; 2025 Vitória Camille</p>
+  </footer>
 </body>
 </html>
